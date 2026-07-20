@@ -35,7 +35,7 @@ def leer_opcion():
 def buscar_codigo(codigo, stock_plataforma):
     return codigo.strip().upper() in stock_plataforma
 
-def actualizar_precios(genero, stock_plataforma, dict_inv):
+def reporte_precios(genero, stock_plataforma, dict_inv):
     gen = genero.strip().upper()
     total = 0
     for cod, datos in stock_plataforma.items():
@@ -77,8 +77,8 @@ def agregar_pelicula(stock_plataforma, dict_inv):
     except ValueError:
         print("ERROR. SOLO DEBE INGRESAR NUMEROS EN CAMPOS NUMÉRICOS.")
 
-def modificar_precio(stock_plataforma, dict_inv):
-    cod = input("Código de juego a modificar: ").strip().upper()
+def actu_precio(stock_plataforma, dict_inv):
+    cod = input("Código de juego a aactualizar: ").strip().upper()
     if buscar_codigo(cod, stock_plataforma):  
         try:
             nuevo_p = int(input(f"Nuevo precio para {stock_plataforma[cod][0]}: "))
@@ -96,3 +96,37 @@ def eliminar_juego(stock_plataforma, dict_inv):
         dict_inv.pop(cod)
         print(f"juego{cod} eliminado de ambos registros.")
     else: print("Error: El código del juego no existe.")
+
+# --- 4. FLUJO PRINCIPAL ---
+def main():
+    while True:
+        print("\n========== MENÚ PRINCIPAL ==========")
+        print("1. Stock por plataforma")
+        print("2. Búsqueda de juegos por rango de precio")
+        print("3. Actualizar precio de juego")
+        print("4. Agregar juego")
+        print("5. Eliminar juego")
+        print("6. Salir")
+        print("=======================================")
+        
+        opcion = leer_opcion()
+        if opcion == 1:
+            reporte_precios(input("Ingrese género: "), juegos, inventario)
+        elif opcion == 2:
+            try:
+                p_min = int(input("Precio mínimo: "))
+                p_max = int(input("Precio máximo: "))
+                buscar_por_clasificación(p_min, p_max, juegos, inventario)
+            except ValueError: print("ERROR. SOLO DEBE INGRESAR NUMEROS")
+        elif opcion == 3:
+            agregar_pelicula(juegos, inventario)
+        elif opcion == 4:
+            actu_precio(juegos, inventario)
+        elif opcion == 5:
+            eliminar_juego(juegos, inventario)
+        elif opcion == 6:
+            print("Programa finalizado limpiamente.")
+            break
+
+if __name__ == "__main__":
+    main()
