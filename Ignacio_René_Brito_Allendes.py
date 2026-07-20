@@ -15,3 +15,11 @@ inventario = {
 'G005': [17990, 9],
 'G006': [39990, 2],
 }
+def validar_codigo_nuevo(codigo, stock_plataforma):
+    cod = codigo.strip().upper()
+    if not cod or cod in stock_plataforma: return False
+    return True
+
+def validar_precios(p_min, p_max):
+    return p_min < p_max
+
